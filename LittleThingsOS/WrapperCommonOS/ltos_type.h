@@ -1,7 +1,7 @@
 /*
  * @Author: Hansson Li
  * @Date: 2021-12-23 09:00:27
- * @LastEditTime: 2021-12-23 10:02:50
+ * @LastEditTime: 2021-12-23 10:20:32
  * @LastEditors: Hansson Li
  * @Description: used to define common data tye
  * MIT License
@@ -22,6 +22,7 @@
 #ifdef USE_FREERTOS
 typedef TaskFunction_t          ltos_task_function_t;
 typedef TaskHandle_t            ltos_task_handle_t;
+typedef TickType_t              ltos_tick_t;
 #else
 typedef void                     ltos_task_handle_t
 typedef void (*ltos_task_function_t)( void * );
