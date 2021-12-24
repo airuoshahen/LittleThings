@@ -1,7 +1,7 @@
 /*
  * @Author: Hansson Li
  * @Date: 2021-12-23 09:00:27
- * @LastEditTime: 2021-12-23 10:20:32
+ * @LastEditTime: 2021-12-24 16:27:31
  * @LastEditors: Hansson Li
  * @Description: used to define common data tye
  * MIT License
@@ -17,12 +17,16 @@
 #ifdef USE_FREERTOS
 #include "FreeRTOS.h"
 #include "task.h"
+#include "queue.h"
+#include "semphr.h"
 #endif
 
 #ifdef USE_FREERTOS
 typedef TaskFunction_t          ltos_task_function_t;
 typedef TaskHandle_t            ltos_task_handle_t;
 typedef TickType_t              ltos_tick_t;
+typedef QueueHandle_t           ltos_queue_handle_t;
+typedef SemaphoreHandle_t       ltos_sem_handle_t;
 #else
 typedef void                     ltos_task_handle_t
 typedef void (*ltos_task_function_t)( void * );
