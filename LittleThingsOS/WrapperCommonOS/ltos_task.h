@@ -1,7 +1,7 @@
 /*
  * @Author: Hansson Li
  * @Date: 2021-12-22 16:08:39
- * @LastEditTime: 2021-12-23 14:24:58
+ * @LastEditTime: 2021-12-24 13:38:08
  * @LastEditors: Hansson Li
  * @Description: LittleThings OS task header file
  * MIT License
@@ -45,6 +45,16 @@ ltos_task_ret_e ltos_task_notify_with_query(ltos_task_handle_t lt_task_handle, l
 ltos_task_ret_e ltos_task_notify_increment_with_query(ltos_task_handle_t lt_task_handle, ltos_u32 *lt_previous_notify_value_ptr);
 ltos_task_ret_e ltos_task_notify_setbits_with_query(ltos_task_handle_t lt_task_handle, ltos_u32 bit_value, ltos_u32 *lt_previous_notify_value_ptr);
 ltos_task_ret_e ltos_task_notify_setvalue_with_query(ltos_task_handle_t lt_task_handle, ltos_u32 set_value, ltos_u32 *lt_previous_notify_value_ptr);
+ltos_task_ret_e ltos_task_notify_give(ltos_task_handle_t lt_task_handle);
+ltos_task_ret_e ltos_task_notify_give_from_isr(ltos_task_handle_t lt_task_handle);
+ltos_u32 ltos_task_notify_take_clear(ltos_tick_t lt_wait_tick);
+ltos_u32 ltos_task_notify_take_decrement(ltos_tick_t lt_wait_tick);
+void ltos_task_resume(ltos_task_handle_t lt_resume_task);
+ltos_task_ret_e ltos_task_resume_all(void);
+ltos_task_ret_e ltos_task_resume_from_isr(ltos_task_handle_t lt_resume_task);
+void ltos_task_start_scheduler(void);
+void ltos_task_suspend(ltos_task_handle_t lt_suspend_task);
+void ltos_task_suspend_all(void);
 
 
 #endif

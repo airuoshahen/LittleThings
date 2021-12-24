@@ -1,7 +1,7 @@
 /*
  * @Author: Hansson Li
  * @Date: 2021-12-22 14:54:15
- * @LastEditTime: 2021-12-23 14:21:02
+ * @LastEditTime: 2021-12-24 13:19:09
  * @LastEditors: Hansson Li
  * @Description: 
  * MIT License
@@ -457,4 +457,177 @@ ltos_task_ret_e ltos_task_notify_setvalue_with_query(ltos_task_handle_t lt_task_
     #endif
 }
 
-// TODO: implement xTaskNotifyGive()
+/**
+ * @description: 
+ * @param {ltos_task_handle_t} lt_task_handle
+ * @return {*}
+ */
+ltos_task_ret_e ltos_task_notify_give(ltos_task_handle_t lt_task_handle)
+{
+    #ifdef USE_FREERTOS
+    if (xTaskNotifyGive(lt_task_handle) == pdPASS)
+    {
+        return LTOS_TASK_OK;
+    }
+    else
+    {
+        return LTOS_TASK_ERR;
+    }
+    #else
+    UNSUPPORT_OS_RET_ERR;
+    #endif
+}
+
+/**
+ * @description: used in interrupt service routine
+ * @param {ltos_task_handle_t} lt_task_handle
+ * @return {*}
+ */
+ltos_task_ret_e ltos_task_notify_give_from_isr(ltos_task_handle_t lt_task_handle)
+{
+    #ifdef USE_FREERTOS
+    BaseType_t lt_higher_priority_task_woken = pdFALSE;
+    
+    if (vTaskGenericNotifyGiveFromISR(lt_task_handle, 0, &lt_higher_priority_task_woken) == pdPASS)
+    {
+        portYIELD_FROM_ISR(lt_higher_priority_task_woken);
+        return LTOS_TASK_OK;
+    }
+    else
+    {
+        portYIELD_FROM_ISR(lt_higher_priority_task_woken);
+        return LTOS_TASK_ERR;
+    }
+    #else
+    UNSUPPORT_OS_RET_ERR;
+    #endif
+}
+
+/**
+ * @description: after it is called, it will clear the notification value of task
+ * @param {ltos_tick_t} lt_wait_tick
+ * @return {ltos_u32} return the value of the task's notification value before it's cleared
+ */
+ltos_u32 ltos_task_notify_take_clear(ltos_tick_t lt_wait_tick)
+{
+    #ifdef USE_FREERTOS
+    return ulTaskGenericNotifyTake(0, pdTRUE, lt_wait_tick);
+    #else
+    UNSUPPORT_OS_RET_ERR;
+    #endif
+}
+
+
+/**
+ * @description: after it is called, it will be decremented the notification value of task
+ * @param {ltos_tick_t} lt_wait_tick
+ * @return {ltos_u32} return the value of the task's notification value before it's decremented
+ */
+ltos_u32 ltos_task_notify_take_decrement(ltos_tick_t lt_wait_tick)
+{
+    #ifdef USE_FREERTOS
+    return ulTaskGenericNotifyTake(0, pdFALSE, lt_wait_tick);
+    #else
+    UNSUPPORT_OS_RET_ERR;
+    #endif
+}
+
+/**
+ * @description: 
+ * @param {ltos_task_handle_t} lt_resume_task
+ * @return {*}
+ */
+void ltos_task_resume(ltos_task_handle_t lt_resume_task)
+{
+    #ifdef USE_FREERTOS
+    vTaskResume(lt_resume_task);
+    #else
+    UNSUPPORT_OS_RET_ERR;
+    #endif
+}
+
+
+/**
+ * @description: 
+ * @param {*}
+ * @return {*}
+ */
+ltos_task_ret_e ltos_task_resume_all(void)
+{
+    #ifdef USE_FREERTOS
+    if (xTaskResumeAll() == pdTRUE)
+    {
+        return LTOS_TASK_OK;
+    }
+    else
+    {
+        return LTOS_TASK_ERR;
+    }
+    #else
+    UNSUPPORT_OS_RET_ERR;
+    #endif
+}
+
+/**
+ * @description: 
+ * @param {ltos_task_handle_t} lt_resume_task
+ * @return {*}
+ */
+ltos_task_ret_e ltos_task_resume_from_isr(ltos_task_handle_t lt_resume_task)
+{
+    #ifdef USE_FREERTOS
+    if (xTaskResumeFromISR(lt_resume_task) == pdTRUE)
+    {
+        return LTOS_TASK_OK;
+    }
+    else
+    {
+        return LTOS_TASK_ERR;
+    }
+    #else
+    UNSUPPORT_OS_RET_ERR;
+    #endif
+}
+
+/**
+ * @description: 
+ * @param {*}
+ * @return {*}
+ */
+void ltos_task_start_scheduler(void)
+{
+    #ifdef USE_FREERTOS
+    vTaskStartScheduler();
+    #else
+    UNSUPPORT_OS_RET_ERR;
+    #endif
+}
+
+/**
+ * @description: 
+ * @param {ltos_task_handle_t} lt_suspend_task
+ * @return {*}
+ */
+void ltos_task_suspend(ltos_task_handle_t lt_suspend_task)
+{
+    #ifdef USE_FREERTOS
+    vTaskSuspend();
+    #else
+    UNSUPPORT_OS_RET_ERR;
+    #endif
+}
+
+
+/**
+ * @description: 
+ * @param {*}
+ * @return {*}
+ */
+void ltos_task_suspend_all(void)
+{
+    #ifdef USE_FREERTOS
+    vTaskSuspendAll();
+    #else
+    UNSUPPORT_OS_RET_ERR;
+    #endif
+}
