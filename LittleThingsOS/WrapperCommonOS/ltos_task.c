@@ -1,7 +1,7 @@
 /*
  * @Author: Hansson Li
  * @Date: 2021-12-22 14:54:15
- * @LastEditTime: 2021-12-24 13:19:09
+ * @LastEditTime: 2021-12-28 14:54:04
  * @LastEditors: Hansson Li
  * @Description: 
  * MIT License
@@ -35,6 +35,7 @@
  */
 
 #include "ltos_task.h"
+#include "portable.h"
 
 #define UNSUPPORT_OS_RET_NULL   return
 #define UNSUPPORT_OS_RET_ERR    do{return LTOS_TASK_UNSUPPORT_OS;}while(0)

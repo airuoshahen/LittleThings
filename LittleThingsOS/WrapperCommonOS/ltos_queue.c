@@ -1,7 +1,7 @@
 /*
  * @Author: Hansson Li
  * @Date: 2021-12-24 13:35:46
- * @LastEditTime: 2021-12-24 16:13:57
+ * @LastEditTime: 2021-12-28 14:53:11
  * @LastEditors: Hansson Li
  * @Description: 
  * MIT License
@@ -36,6 +36,7 @@
 
 
 #include "ltos_queue.h"
+#include "portable.h"
 
 #define UNSUPPORT_OS_RET_NULL   return
 #define UNSUPPORT_OS_RET_ERR    do{return LTOS_QUEUE_UNSUPPORT_OS;}while(0)
