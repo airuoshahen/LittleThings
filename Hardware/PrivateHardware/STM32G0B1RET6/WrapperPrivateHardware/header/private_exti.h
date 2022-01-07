@@ -1,7 +1,7 @@
 /*
  * @Author: Hansson Li
  * @Date: 2022-01-06 13:24:34
- * @LastEditTime: 2022-01-06 13:57:20
+ * @LastEditTime: 2022-01-07 13:31:00
  * @LastEditors: Hansson Li
  * @Description: I think external interrupt of gpio is different from input and output, so this function is implemented in independent file
  * MIT License
@@ -26,11 +26,16 @@ typedef enum{
     PRIVATE_EXTI_LOW_TRIGGER,
     PRIVATE_EXTI_HIGH_TRIGGER,
     PRIVATE_EXTI_PULSE_TRIGGER,
+    PRIVATE_EXTI_TRIGGER_NUM,
 }private_exti_mode_e;
 
 typedef enum{
     PRIVATE_EXTI_RET_OK,
-    PRIVATE_EXTI_RET_ERR
+    PRIVATE_EXTI_RET_ERR,
+    PRIVATE_EXTI_RET_WRONG_DEV,
+    PRIVATE_EXTI_RET_WRONG_TRIGGER,
+    PRIVATE_EXTI_RET_WRONG_PORT,
+    PRIVATE_EXTI_RET_WRONG_CB_FUNC,
 }private_exti_ret_e;
 
 typedef void (*private_exti_callback_ptr)(private_exti_dev_e, private_exti_mode_e);
@@ -55,6 +60,6 @@ private_exti_ret_e private_exti_init(private_exti_dev_e init_exti_dev, private_e
  * @param {private_exti_callback_ptr} callback_func
  * @return {*}
  */
-void private_exti_add_callback(private_exti_dev_e exti_dev, private_exti_callback_ptr callback_func);
+private_exti_ret_e private_exti_add_callback(private_exti_dev_e exti_dev, private_exti_callback_ptr callback_func);
 
 #endif
