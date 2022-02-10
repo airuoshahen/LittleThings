@@ -1,7 +1,7 @@
 /*
  * @Author: Hansson Li
  * @Date: 2022-01-06 11:01:01
- * @LastEditTime: 2022-01-07 09:48:55
+ * @LastEditTime: 2022-01-06 13:37:18
  * @LastEditors: Hansson Li
  * @Description: 
  * MIT License
@@ -18,14 +18,15 @@
 // this enum should be changed by the user, because the user get know which gpio is supported by HW
 typedef enum{
     PRIVATE_GPIO_0,
+    PRIVATE_GPIO_1,
+    PRIVATE_GPIO_2,
     PRIVATE_GPIO_NUM
 }private_gpio_pin_e;
 
 typedef enum{
     PRIVATE_GPIO_LOW,
     PRIVATE_GPIO_HIGH,
-    PRIVATE_GPIO_REVERSE,
-    PRIVATE_GPIO_STATE_NUM
+    PRIVATE_GPIO_OUTPUT_NUM
 }private_gpio_state_e;
 
 typedef enum{
@@ -36,11 +37,7 @@ typedef enum{
 
 typedef enum{
     PRIVATE_GPIO_RET_OK,
-    PRIVATE_GPIO_RET_ERR,
-    PRIVATE_GPIO_RET_WRONG_PIN,
-    PRIVATE_GPIO_RET_WRONG_PORT,
-    PRIVATE_GPIO_RET_WRONG_MODE,
-    PRIVATE_GPIO_RET_WRONG_STATE,
+    PRIVATE_GPIO_RET_ERR
 }private_gpio_ret_e;
 
 /**
@@ -56,7 +53,7 @@ uint32_t private_gpio_get_support_num(void);
  * @param {private_gpio_mode_e} configure_mode
  * @return {*}
  */
-private_gpio_ret_e private_gpio_init(private_gpio_pin_e configure_pin, private_gpio_mode_e configure_mode);
+void private_gpio_init(private_gpio_pin_e configure_pin, private_gpio_mode_e configure_mode);
 
 
 /**
@@ -73,7 +70,7 @@ private_gpio_ret_e private_gpio_write(private_gpio_pin_e write_pin, private_gpio
  * @param {private_gpio_state_e} *p_read_state -- used to save the state read from read pin
  * @return {private_gpio_ret_e} if gpio is configured with output mode, return err
  */
-private_gpio_ret_e private_gpio_read(private_gpio_pin_e read_pin, private_gpio_state_e *p_read_state);
+private_gpio_ret_e private_gpio_read(private_gpio_pin_e read_pin, const private_gpio_state_e *p_read_state);
 
 
 #endif
